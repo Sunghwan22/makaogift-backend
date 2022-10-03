@@ -2,6 +2,13 @@ package megaptera.makaoGift.dtos;
 
 public class ErrorDto {
   public static final int LOGIN_INFORMATION_INCORRECT = 1001;
+  public static final int BLANK_INPUT_FIELD = 1002;
+  public static final int NOT_EQUAL_CONFIRM_PASSWORD = 1003;
+  public static final int ALREADY_EXIST_IDENTIFIER = 1004;
+  public static final int INCORRECT_NAME = 1005;
+  public static final int INCORRECT_IDENTIFIER = 1006;
+  public static final int INCORRECT_PASSWORD = 1007;
+  public static final int BLANKINFORMATION = 1008;
 
   private final Integer code;
 

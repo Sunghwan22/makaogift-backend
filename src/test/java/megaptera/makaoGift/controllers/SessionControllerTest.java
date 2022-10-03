@@ -31,7 +31,7 @@ class SessionControllerTest {
   void setUp() {
     User user = User.fake("tidls45");
 
-    given(loginService.login("tidls45", "password"))
+    given(loginService.login("tidls45", "Tjdghks245@"))
         .willReturn(user);
 
     given(loginService.login("tidls45", "xxx"))
@@ -64,4 +64,19 @@ class SessionControllerTest {
                 "}"))
         .andExpect(status().isBadRequest());
   }
+  // 한글은 테스트가 안되넹
+//  @Test
+//  void loginWithBlankIdentifier() throws Exception {
+//    mockMvc.perform(MockMvcRequestBuilders.post("/session")
+//            .accept(MediaType.APPLICATION_JSON)
+//            .contentType(MediaType.APPLICATION_JSON)
+//            .content("{" +
+//                "\"identifier\":\"\"," +
+//                "\"password\":\"xxx\"" +
+//                "}"))
+//        .andExpect(status().isBadRequest())
+//        .andExpect(content().string(
+//            containsString("아이디를 입력해주세요")
+//        ));
+//  }
 }

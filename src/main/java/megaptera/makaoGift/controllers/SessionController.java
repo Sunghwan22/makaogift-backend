@@ -9,7 +9,9 @@ import megaptera.makaoGift.services.LoginService;
 import megaptera.makaoGift.utils.JwtUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -47,9 +49,19 @@ public class SessionController {
         user.amount());
   }
 
-  @ExceptionHandler({LoginFailed.class})
+  @ExceptionHandler(LoginFailed.class)
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   public LoginFailedDto loginFailed() {
     return new LoginFailedDto(1001, "아이디 혹은 비밀번호가 맞지 않습니다");
+  }
+
+  @ExceptionHandler(MethodArgumentNotValidException.class)
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
+  public LoginFailedDto registerFailed(MethodArgumentNotValidException exception) {
+    for (ObjectError error : exception.getBindingResult().getAllErrors()) {
+
+      return new LoginFailedDto(1002, error.getDefaultMessage());
+    }
+    return new LoginFailedDto(1002, "공백일 수 없습니다");
   }
 }

@@ -1,5 +1,6 @@
 package megaptera.makaoGift.models;
 
+import megaptera.makaoGift.dtos.UserCreatedDto;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.Entity;
@@ -33,6 +34,12 @@ public class User {
     this.amount = amount;
   }
 
+  public User(Long id, String name, String identifier) {
+    this.id = id;
+    this.name = name;
+    this.identifier = identifier;
+  }
+
   public Long id() {
     return id;
   }
@@ -63,5 +70,9 @@ public class User {
 
   public void changePassword(String password, PasswordEncoder passwordEncoder) {
     this.password = passwordEncoder.encode(password);
+  }
+
+  public UserCreatedDto createdDto() {
+    return new UserCreatedDto(name, amount);
   }
 }
