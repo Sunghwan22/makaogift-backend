@@ -9,6 +9,7 @@ import megaptera.makaoGift.services.LoginService;
 import megaptera.makaoGift.utils.JwtUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,7 +31,7 @@ public class SessionController {
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
   public LoginResultDto login(
-      @RequestBody LoginRequestDto loginRequestDto
+      @Validated @RequestBody LoginRequestDto loginRequestDto
   ) {
     String identifier = loginRequestDto.getIdentifier();
 
