@@ -69,6 +69,18 @@ public class UserController {
   private Integer getCodeByDefaultMessage(String message) {
     Integer code = 0;
 
+    if(message.equals("이름을 입력해주세요")) {
+      code = 1010;
+    }
+
+    if(message.equals("비밀번호를 입력해주세요")) {
+      code = 1010;
+    }
+
+    if(message.equals("아이디를 입력해주세요")) {
+      code = 1010;
+    }
+
     if(message.equals("이름을 다시 확인해주세요")) {
       code = 1005;
     }

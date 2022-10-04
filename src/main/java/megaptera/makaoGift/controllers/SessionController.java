@@ -57,7 +57,7 @@ public class SessionController {
 
   @ExceptionHandler(MethodArgumentNotValidException.class)
   @ResponseStatus(HttpStatus.BAD_REQUEST)
-  public LoginFailedDto registerFailed(MethodArgumentNotValidException exception) {
+  public LoginFailedDto LoginFailed(MethodArgumentNotValidException exception) {
     for (ObjectError error : exception.getBindingResult().getAllErrors()) {
 
       return new LoginFailedDto(1002, error.getDefaultMessage());

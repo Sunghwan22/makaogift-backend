@@ -1,12 +1,15 @@
 package megaptera.makaoGift.models;
 
 import megaptera.makaoGift.dtos.UserCreatedDto;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "PERSON")
@@ -19,18 +22,24 @@ public class User {
 
   private String identifier;
 
-  private String password;
+  private String encodedPassword;
 
   private Long amount;
+
+  @CreationTimestamp
+  private LocalDateTime createdAt;
+
+  @UpdateTimestamp
+  private LocalDateTime updatedAt;
 
   public User() {
   }
 
-  public User(Long id, String name, String identifier, String password, Long amount) {
+  public User(Long id, String name, String identifier, String encodedPassword, Long amount) {
     this.id = id;
     this.name = name;
     this.identifier = identifier;
-    this.password = password;
+    this.encodedPassword = encodedPassword;
     this.amount = amount;
   }
 
@@ -53,7 +62,7 @@ public class User {
   }
 
   public String password() {
-    return password;
+    return encodedPassword;
   }
 
   public Long amount() {
@@ -65,14 +74,14 @@ public class User {
   }
 
   public boolean authenticate(PasswordEncoder passwordEncoder, String password) {
-    return passwordEncoder.matches(password, this.password);
+    return passwordEncoder.matches(password, this.encodedPassword);
   }
 
   public void changePassword(String password, PasswordEncoder passwordEncoder) {
-    this.password = passwordEncoder.encode(password);
+    this.encodedPassword = passwordEncoder.encode(password);
   }
 
   public UserCreatedDto createdDto() {
-    return new UserCreatedDto(name, amount);
+    return new UserCreatedDto(name, 0L);
   }
 }
