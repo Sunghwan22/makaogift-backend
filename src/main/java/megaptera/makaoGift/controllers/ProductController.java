@@ -5,6 +5,7 @@ import megaptera.makaoGift.dtos.ProductsDto;
 import megaptera.makaoGift.models.Product;
 import megaptera.makaoGift.services.ProductService;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,6 +20,15 @@ public class ProductController {
 
   public ProductController(ProductService productService) {
     this.productService = productService;
+  }
+
+  @GetMapping("/{id}")
+  public ProductDto productDetail(
+      @PathVariable("id") Long productId) {
+
+    Product product = productService.detail(productId);
+
+    return product.toDto();
   }
 
   @GetMapping

@@ -30,4 +30,10 @@ class BackdoorControllerTest {
     mockMvc.perform(MockMvcRequestBuilders.get("/backdoor/change-amount?userId=1&amount=1234"))
         .andExpect(status().isOk());
   }
+
+  @Test
+  void setupProduct() throws Exception {
+    mockMvc.perform(MockMvcRequestBuilders.get("/backdoor/setup-product"))
+        .andExpect(status().isOk());
+  }
 }

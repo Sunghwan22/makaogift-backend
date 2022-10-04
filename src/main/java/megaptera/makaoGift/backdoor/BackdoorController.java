@@ -57,4 +57,79 @@ public class BackdoorController {
 
     return "OK";
   }
+
+  @GetMapping("setup-product")
+  public String setupProduct() {
+    LocalDateTime now = LocalDateTime.now();
+
+    jdbcTemplate.execute("DELETE FROM product");
+  // id, company , name , option, price , description
+    jdbcTemplate.update("" +
+            "INSERT INTO product(" +
+            "id, company, name, option, price, description, " +
+            "created_at, updated_at)" +
+            " VALUES(1, ?, ?, ?, ?, ?, ?, ?)",
+        "애플", "아이폰14", "맥스", 1_500_000L, "갖고 싶다", now, now
+    );
+
+    // id, company , name , option, price , description
+    jdbcTemplate.update("" +
+            "INSERT INTO product(" +
+            "id, company, name, option, price, description, " +
+            "created_at, updated_at)" +
+            " VALUES(2, ?, ?, ?, ?, ?, ?, ?)",
+        "삼성전자", "갤럭시S22", "맥스", 100_000L, "역시 애플이 좋은듯", now, now
+    );
+
+    // id, company , name , option, price , description
+    jdbcTemplate.update("" +
+            "INSERT INTO product(" +
+            "id, company, name, option, price, description, " +
+            "created_at, updated_at)" +
+            " VALUES(3, ?, ?, ?, ?, ?, ?, ?)",
+        "애플", "맥북M2", "16인치프로", 4_000_000L, "갖고 싶다", now, now
+    );
+
+    jdbcTemplate.update("" +
+            "INSERT INTO product(" +
+            "id, company, name, option, price, description, " +
+            "created_at, updated_at)" +
+            " VALUES(4, ?, ?, ?, ?, ?, ?, ?)",
+        "LG", "그램", "몰라옵션이뭐여", 700_000L, "맥북 갖고 싶다", now, now
+    );
+
+    jdbcTemplate.update("" +
+            "INSERT INTO product(" +
+            "id, company, name, option, price, description, " +
+            "created_at, updated_at)" +
+            " VALUES(5, ?, ?, ?, ?, ?, ?, ?)",
+        "LG", "그램", "몰라옵션이뭐여", 700_000L, "맥북 갖고 싶다", now, now
+    );
+
+    jdbcTemplate.update("" +
+            "INSERT INTO product(" +
+            "id, company, name, option, price, description, " +
+            "created_at, updated_at)" +
+            " VALUES(6, ?, ?, ?, ?, ?, ?, ?)",
+        "LG", "그램", "몰라옵션이뭐여", 700_000L, "맥북 갖고 싶다", now, now
+    );
+
+    jdbcTemplate.update("" +
+            "INSERT INTO product(" +
+            "id, company, name, option, price, description, " +
+            "created_at, updated_at)" +
+            " VALUES(7, ?, ?, ?, ?, ?, ?, ?)",
+        "LG", "그램", "몰라옵션이뭐여", 700_000L, "맥북 갖고 싶다", now, now
+    );
+
+    jdbcTemplate.update("" +
+            "INSERT INTO product(" +
+            "id, company, name, option, price, description, " +
+            "created_at, updated_at)" +
+            " VALUES(8, ?, ?, ?, ?, ?, ?, ?)",
+        "LG", "그램", "몰라옵션이뭐여", 700_000L, "맥북 갖고 싶다", now, now
+    );
+
+    return "OK";
+  }
 }

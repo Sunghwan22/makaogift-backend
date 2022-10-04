@@ -1,10 +1,13 @@
 package megaptera.makaoGift.models;
 
 import megaptera.makaoGift.dtos.ProductDto;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.time.LocalDateTime;
 
 @Entity
 public class Product {
@@ -21,6 +24,12 @@ public class Product {
   private Long price;
 
   private String description;
+
+  @CreationTimestamp
+  private LocalDateTime createdAt;
+
+  @UpdateTimestamp
+  private LocalDateTime updatedAt;
 
   public Product() {
   }

@@ -52,7 +52,7 @@ class ProductControllerTest {
   @Test
   void productDetail() throws Exception {
     Product product =
-        new Product(1L, "apple", "아이폰31", "그라파이트", 100000L, "상품 설명");
+        new Product(1L, "apple", "iphone", "midnight", 100000L, "description");
 
     given(productService.detail(any())).willReturn(product);
 
@@ -62,15 +62,15 @@ class ProductControllerTest {
             containsString("apple")))
 
         .andExpect(content().string(
-            containsString("아이폰31")))
+            containsString("iphone")))
 
         .andExpect(content().string(
-            containsString("그라파이트")))
+            containsString("midnight")))
 
         .andExpect(content().string(
-            containsString("100000L")))
+            containsString("100000")))
 
         .andExpect(content().string(
-            containsString("상품설명")));
+            containsString("description")));
   }
 }
