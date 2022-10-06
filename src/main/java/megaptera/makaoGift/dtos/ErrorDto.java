@@ -9,6 +9,8 @@ public class ErrorDto {
   public static final int INCORRECT_IDENTIFIER = 1006;
   public static final int INCORRECT_PASSWORD = 1007;
   public static final int BLANKINFORMATION = 1008;
+  public static final int USER_NOT_FOUND = 1009;
+  public static final int PRODUCT_NOT_FOUND = 1010;
 
   private final Integer code;
 

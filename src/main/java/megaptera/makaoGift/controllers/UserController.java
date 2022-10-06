@@ -6,6 +6,7 @@ import megaptera.makaoGift.dtos.NotEqualConfirmPasswordDto;
 import megaptera.makaoGift.dtos.SignUpRequestDto;
 import megaptera.makaoGift.dtos.SignupFailedDto;
 import megaptera.makaoGift.dtos.UserCreatedDto;
+import megaptera.makaoGift.dtos.UserDto;
 import megaptera.makaoGift.exceptions.AlreadyExistIdentifier;
 import megaptera.makaoGift.exceptions.NotEqualConfirmPassword;
 import megaptera.makaoGift.models.User;
@@ -15,7 +16,9 @@ import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -30,6 +33,16 @@ public class UserController {
 
   public UserController(UserService userService) {
     this.userService = userService;
+  }
+
+  @GetMapping("me")
+  public UserDto user(
+      @RequestAttribute("identifier") String identifier
+  ) {
+
+    User user = userService.detail(identifier);
+
+    return user.toDto();
   }
 
   @PostMapping

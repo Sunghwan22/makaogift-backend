@@ -1,6 +1,5 @@
 package megaptera.makaoGift.services;
 
-import megaptera.makaoGift.dtos.LoginRequestDto;
 import megaptera.makaoGift.exceptions.LoginFailed;
 import megaptera.makaoGift.models.User;
 import megaptera.makaoGift.repositories.UserRepository;

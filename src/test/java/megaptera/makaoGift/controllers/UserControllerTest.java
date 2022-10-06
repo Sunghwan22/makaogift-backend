@@ -2,20 +2,25 @@ package megaptera.makaoGift.controllers;
 
 import megaptera.makaoGift.dtos.SignUpRequestDto;
 import megaptera.makaoGift.exceptions.NotEqualConfirmPassword;
+import megaptera.makaoGift.exceptions.UserNotFound;
 import megaptera.makaoGift.models.User;
 import megaptera.makaoGift.services.UserService;
+import megaptera.makaoGift.utils.JwtUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import static org.hamcrest.Matchers.containsString;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(UserController.class)
@@ -26,12 +31,8 @@ class UserControllerTest {
   @MockBean
   private UserService userService;
 
-//  @BeforeEach
-//  void setup() {
-//    given(userService.create(any())).willReturn(new User(
-//        1L, "tidls45", "Tjdghks245@"
-//    ));
-//  }
+  @SpyBean
+  private JwtUtil jwtUtil;
 
   @Test
   void signup() throws Exception {
@@ -184,6 +185,32 @@ class UserControllerTest {
                 "\"password\":\"\"," +
                 "\"confirmPassword\":\"\"" +
                 "}"))
+        .andExpect(status().isBadRequest());
+  }
+
+  @Test
+  void userWithAccessToken() throws Exception {
+    given(userService.detail(any()))
+        .willReturn(User.fake("tidls45"));
+
+    String accessToken = jwtUtil.encode("tidls45");
+
+    mockMvc.perform(MockMvcRequestBuilders.get("/user/me")
+            .header("Authorization", "Bearer " + accessToken))
+        .andExpect(status().isOk())
+        .andExpect(content().string(
+            containsString("\"amount\":500000")
+        ));
+  }
+
+  @Test
+  void accountWithOutAccessToken() throws Exception {
+    given(userService.detail(any()))
+        .willThrow(new UserNotFound("tidls45"));
+
+    String accessToken = jwtUtil.encode("tidls45");
+
+    mockMvc.perform(MockMvcRequestBuilders.get("/user/me"))
         .andExpect(status().isBadRequest());
   }
 }

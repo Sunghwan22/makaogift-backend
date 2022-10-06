@@ -20,4 +20,15 @@ class UserTest {
     assertThat(user.authenticate(passwordEncoder, "xxx")).isFalse();
   }
 
+  @Test
+  void pay() {
+    Long totalAmount = 200_000L;
+
+    User user = User.fake("tidls45");
+
+    user.pay(totalAmount);
+
+    assertThat(user.amount()).isEqualTo(300_000L);
+  }
+
 }

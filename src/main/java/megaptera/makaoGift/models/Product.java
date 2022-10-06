@@ -63,11 +63,11 @@ public class Product {
     return price;
   }
 
-  public String getDescription() {
+  public String description() {
     return description;
   }
 
   public ProductDto toDto() {
-    return new ProductDto(company, name , option, price , description);
+    return new ProductDto(id, company, name, option, price, description);
   }
 }

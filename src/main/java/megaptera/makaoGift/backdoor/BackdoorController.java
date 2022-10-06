@@ -103,7 +103,7 @@ public class BackdoorController {
             "id, company, name, option, price, description, " +
             "created_at, updated_at)" +
             " VALUES(5, ?, ?, ?, ?, ?, ?, ?)",
-        "LG", "그램", "몰라옵션이뭐여", 700_000L, "맥북 갖고 싶다", now, now
+        "DRUG HOMME", "트렌치코트", "XL", 250_000L, "품절입니다", now, now
     );
 
     jdbcTemplate.update("" +
@@ -111,7 +111,7 @@ public class BackdoorController {
             "id, company, name, option, price, description, " +
             "created_at, updated_at)" +
             " VALUES(6, ?, ?, ?, ?, ?, ?, ?)",
-        "LG", "그램", "몰라옵션이뭐여", 700_000L, "맥북 갖고 싶다", now, now
+        "VAMILLO", "고래", "특징: 예쁨", 200_000L, "품절입니다", now, now
     );
 
     jdbcTemplate.update("" +
@@ -119,7 +119,7 @@ public class BackdoorController {
             "id, company, name, option, price, description, " +
             "created_at, updated_at)" +
             " VALUES(7, ?, ?, ?, ?, ?, ?, ?)",
-        "LG", "그램", "몰라옵션이뭐여", 700_000L, "맥북 갖고 싶다", now, now
+        "VAMILLO", "스킨", "이것도 맘에드내", 200_000L, "품절은 아니네", now, now
     );
 
     jdbcTemplate.update("" +
@@ -127,8 +127,17 @@ public class BackdoorController {
             "id, company, name, option, price, description, " +
             "created_at, updated_at)" +
             " VALUES(8, ?, ?, ?, ?, ?, ?, ?)",
-        "LG", "그램", "몰라옵션이뭐여", 700_000L, "맥북 갖고 싶다", now, now
+        "롯데건설", "시그니엘 레지던스", "한강뷰 150평 펜트하우스", 14_000_000_000L, "인생은 한강뷰 아니면 한강행", now, now
     );
+
+    return "OK";
+  }
+
+  @GetMapping("delete-products")
+  public String deleteProducts() {
+    //todo 잔액 변경
+
+    jdbcTemplate.execute("DELETE FROM product");
 
     return "OK";
   }

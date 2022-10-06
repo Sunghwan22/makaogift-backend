@@ -1,6 +1,7 @@
 package megaptera.makaoGift.models;
 
 import megaptera.makaoGift.dtos.UserCreatedDto;
+import megaptera.makaoGift.dtos.UserDto;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -49,6 +50,13 @@ public class User {
     this.identifier = identifier;
   }
 
+  public User(long id, String name, String identifier, long amount) {
+    this.id = id;
+    this.name = name;
+    this.identifier = identifier;
+    this.amount = amount;
+  }
+
   public Long id() {
     return id;
   }
@@ -83,5 +91,13 @@ public class User {
 
   public UserCreatedDto createdDto() {
     return new UserCreatedDto(name, 0L);
+  }
+
+  public UserDto toDto() {
+    return new UserDto(name , amount);
+  }
+
+  public void pay(Long totalPrice) {
+    this.amount -= totalPrice;
   }
 }

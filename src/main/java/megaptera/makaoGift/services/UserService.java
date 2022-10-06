@@ -3,6 +3,7 @@ package megaptera.makaoGift.services;
 import megaptera.makaoGift.dtos.SignUpRequestDto;
 import megaptera.makaoGift.exceptions.AlreadyExistIdentifier;
 import megaptera.makaoGift.exceptions.NotEqualConfirmPassword;
+import megaptera.makaoGift.exceptions.UserNotFound;
 import megaptera.makaoGift.models.User;
 import megaptera.makaoGift.repositories.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -45,5 +46,10 @@ public class UserService {
     userRepository.save(user);
 
     return user;
+  }
+
+  public User detail(String identifier) {
+    return userRepository.findByIdentifier(identifier)
+        .orElseThrow(() -> new UserNotFound(identifier));
   }
 }
