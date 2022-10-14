@@ -25,7 +25,7 @@ public class UserService {
   }
 
   public User create(SignUpRequestDto signUpRequestDto) {
-    if(!Objects.equals(signUpRequestDto.getPassword(), signUpRequestDto.getConfirmPassword())) {
+    if(!signUpRequestDto.getPassword().equals(signUpRequestDto.getConfirmPassword())) {
       throw new NotEqualConfirmPassword();
     }
 

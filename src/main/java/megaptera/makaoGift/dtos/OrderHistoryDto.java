@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class OrderHistoryDto {
+  private Long id;
 
   private String identifier;
 
@@ -28,10 +29,11 @@ public class OrderHistoryDto {
   public OrderHistoryDto() {
   }
 
-  public OrderHistoryDto(String identifier, String productName,
+  public OrderHistoryDto(Long id, String identifier, String productName,
                          String company, String description, Long totalPrice,
                          Long quantity, String name, String address,
                          String message) {
+    this.id = id;
     this.identifier = identifier;
     this.productName = productName;
     this.company = company;
@@ -41,6 +43,10 @@ public class OrderHistoryDto {
     this.name = name;
     this.address = address;
     this.message = message;
+  }
+
+  public Long getId() {
+    return id;
   }
 
   public String getIdentifier() {

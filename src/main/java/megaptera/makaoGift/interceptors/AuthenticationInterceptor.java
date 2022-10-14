@@ -39,7 +39,8 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 
       request.setAttribute("identifier", identifier);
       return true;
-    } catch (SignatureVerificationException exception) {
+
+    } catch (JWTDecodeException exception) {
       throw new AuthenticationError();
     }
   }

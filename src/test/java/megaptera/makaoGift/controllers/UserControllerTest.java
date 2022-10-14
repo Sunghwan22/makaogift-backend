@@ -1,12 +1,10 @@
 package megaptera.makaoGift.controllers;
 
-import megaptera.makaoGift.dtos.SignUpRequestDto;
 import megaptera.makaoGift.exceptions.NotEqualConfirmPassword;
 import megaptera.makaoGift.exceptions.UserNotFound;
 import megaptera.makaoGift.models.User;
 import megaptera.makaoGift.services.UserService;
 import megaptera.makaoGift.utils.JwtUtil;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -56,9 +54,9 @@ class UserControllerTest {
 
   @Test
   void signupWithNotEqualConfirmPassword() throws Exception {
-    given(userService.create(any())).willReturn(new User(
-        1L, "tidls45", "Tjdghks245@"
-    ));
+    given(userService.create(any())).willThrow(
+        new NotEqualConfirmPassword()
+    );
 
     mockMvc.perform(MockMvcRequestBuilders.post("/user")
             .accept(MediaType.APPLICATION_JSON)
@@ -70,6 +68,8 @@ class UserControllerTest {
                 "\"confirmPassword\":\"xxx\"" +
                 "}"))
         .andExpect(status().isBadRequest());
+
+    verify(userService).create(any());
   }
 
   @Test

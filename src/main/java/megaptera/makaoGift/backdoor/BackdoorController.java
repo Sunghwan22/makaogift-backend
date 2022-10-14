@@ -63,7 +63,7 @@ public class BackdoorController {
     LocalDateTime now = LocalDateTime.now();
 
     jdbcTemplate.execute("DELETE FROM product");
-  // id, company , name , option, price , description
+    // id, company , name , option, price , description
     jdbcTemplate.update("" +
             "INSERT INTO product(" +
             "id, company, name, option, price, description, " +
@@ -130,6 +130,22 @@ public class BackdoorController {
         "롯데건설", "시그니엘 레지던스", "한강뷰 150평 펜트하우스", 14_000_000_000L, "인생은 한강뷰 아니면 한강행", now, now
     );
 
+    jdbcTemplate.update("" +
+            "INSERT INTO product(" +
+            "id, company, name, option, price, description, " +
+            "created_at, updated_at)" +
+            " VALUES(9, ?, ?, ?, ?, ?, ?, ?)",
+        "롯데건설", "시그니엘 레지던스", "한강뷰 150평 펜트하우스", 14_000_000_000L, "인생은 한강뷰 아니면 한강행", now, now
+    );
+
+    jdbcTemplate.update("" +
+            "INSERT INTO product(" +
+            "id, company, name, option, price, description, " +
+            "created_at, updated_at)" +
+            " VALUES(10, ?, ?, ?, ?, ?, ?, ?)",
+        "롯데건설", "시그니엘 레지던스", "한강뷰 150평 펜트하우스", 14_000_000_000L, "인생은 한강뷰 아니면 한강행", now, now
+    );
+
     return "OK";
   }
 
@@ -138,6 +154,15 @@ public class BackdoorController {
     //todo 잔액 변경
 
     jdbcTemplate.execute("DELETE FROM product");
+
+    return "OK";
+  }
+
+  @GetMapping("delete-orderHistory")
+  public String deleteOrderHistory() {
+    //todo 잔액 변경
+
+    jdbcTemplate.execute("DELETE FROM order_History");
 
     return "OK";
   }

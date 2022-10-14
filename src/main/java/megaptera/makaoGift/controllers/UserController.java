@@ -35,11 +35,11 @@ public class UserController {
     this.userService = userService;
   }
 
-  @GetMapping("me")
+  @GetMapping("/me")
   public UserDto user(
       @RequestAttribute("identifier") String identifier
   ) {
-
+    
     User user = userService.detail(identifier);
 
     return user.toDto();

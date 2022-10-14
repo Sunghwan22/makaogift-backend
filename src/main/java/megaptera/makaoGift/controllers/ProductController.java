@@ -25,7 +25,6 @@ public class ProductController {
   @GetMapping("/{id}")
   public ProductDto productDetail(
       @PathVariable("id") Long productId) {
-
     Product product = productService.detail(productId);
 
     return product.toDto();
@@ -35,11 +34,14 @@ public class ProductController {
   public ProductsDto products(
       @RequestParam(required = false, defaultValue = "1") Integer page
   ) {
-    List<ProductDto> productDtos =
-        productService.list(page)
-            .stream().map(Product::toDto)
-            .collect(Collectors.toList());
 
-    return new ProductsDto(productDtos);
+    List<ProductDto> productDto = productService.list(page)
+        .stream()
+        .map(Product::toDto)
+        .collect(Collectors.toList());
+
+    int pageNumber = productService.pages();
+
+    return new ProductsDto(productDto, pageNumber);
   }
 }

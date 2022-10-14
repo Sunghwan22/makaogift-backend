@@ -11,6 +11,7 @@ public class ErrorDto {
   public static final int BLANKINFORMATION = 1008;
   public static final int USER_NOT_FOUND = 1009;
   public static final int PRODUCT_NOT_FOUND = 1010;
+  public static final int INSUFFICIENT_AMOUNT_ERROR = 1011;
 
   private final Integer code;
 

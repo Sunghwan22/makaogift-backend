@@ -8,7 +8,6 @@ import megaptera.makaoGift.models.User;
 import megaptera.makaoGift.services.LoginService;
 import megaptera.makaoGift.utils.JwtUtil;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.MethodArgumentNotValidException;

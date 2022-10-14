@@ -100,8 +100,8 @@ public class OrderHistory {
   }
 
   public OrderHistoryDto toDto() {
-    return new OrderHistoryDto(identifier,productName,
-        company,description,totalPrice,
-        quantity,name,address,message);
+    return new OrderHistoryDto(id, identifier, productName,
+        company, description, totalPrice,
+        quantity, name, address, message);
   }
 }

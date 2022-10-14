@@ -1,5 +1,6 @@
 package megaptera.makaoGift.controllers;
 
+import megaptera.makaoGift.dtos.InsufficientAmountErrorDto;
 import megaptera.makaoGift.dtos.OrderDto;
 import megaptera.makaoGift.dtos.OrderFailedDto;
 import megaptera.makaoGift.dtos.OrderHistoryDto;
@@ -7,6 +8,7 @@ import megaptera.makaoGift.dtos.OrderHistoryDtos;
 import megaptera.makaoGift.dtos.OrderResultDto;
 import megaptera.makaoGift.dtos.ProductNotFoundDto;
 import megaptera.makaoGift.dtos.UserNotFoundDto;
+import megaptera.makaoGift.exceptions.InsufficientAmountError;
 import megaptera.makaoGift.exceptions.ProductNotFound;
 import megaptera.makaoGift.exceptions.UserNotFound;
 import megaptera.makaoGift.models.OrderHistory;
@@ -18,10 +20,12 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -41,16 +45,27 @@ public class OrderController {
 
   @GetMapping
   public OrderHistoryDtos list(
-      @RequestAttribute("identifier") String identifier
+      @RequestAttribute("identifier") String identifier,
+      @RequestParam(required = false, defaultValue = "1") Integer page
   ) {
-    List<OrderHistoryDto> orderHistoryDtos =
-        orderHistoryService.list(identifier)
+    List<OrderHistoryDto> orderHistories =
+        orderHistoryService.list(identifier, page)
             .stream()
             .map(OrderHistory::toDto)
             .collect(Collectors.toList());
 
+    int pageNumber = orderHistoryService.pages(identifier);
 
-        return new OrderHistoryDtos(orderHistoryDtos);
+    return new OrderHistoryDtos(orderHistories, pageNumber);
+  }
+
+  @GetMapping("/{id}")
+  public OrderHistoryDto detail(
+      @PathVariable("id") Long orderHistoryId) {
+
+    OrderHistory orderHistory = orderHistoryService.detail(orderHistoryId);
+
+    return orderHistory.toDto();
   }
 
   @PostMapping
@@ -74,13 +89,19 @@ public class OrderController {
   @ExceptionHandler(ProductNotFound.class)
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   public ProductNotFoundDto productNotFoundDto() {
-      return new ProductNotFoundDto();
+    return new ProductNotFoundDto();
   }
 
   @ExceptionHandler(UserNotFound.class)
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   public UserNotFoundDto userNotFoundDto() {
     return new UserNotFoundDto();
+  }
+
+  @ExceptionHandler(InsufficientAmountError.class)
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
+  public InsufficientAmountErrorDto insufficientAmountErrorDto() {
+    return new InsufficientAmountErrorDto();
   }
 
   @ExceptionHandler(MethodArgumentNotValidException.class)

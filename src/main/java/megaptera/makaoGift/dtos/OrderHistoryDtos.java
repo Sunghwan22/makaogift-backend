@@ -3,17 +3,19 @@ package megaptera.makaoGift.dtos;
 import java.util.List;
 
 public class OrderHistoryDtos {
-  private List<OrderHistoryDto> orderHistoryDtos;
+  private List<OrderHistoryDto> orderHistories;
+  private int pageNumber;
 
-  public OrderHistoryDtos() {
+  public OrderHistoryDtos(List<OrderHistoryDto> orderHistories, int pageNumber) {
+    this.orderHistories = orderHistories;
+    this.pageNumber = pageNumber;
   }
 
-  public OrderHistoryDtos(List<OrderHistoryDto> orderHistoryDtos) {
-
-    this.orderHistoryDtos = orderHistoryDtos;
+  public int getPageNumber() {
+    return pageNumber;
   }
 
-  public List<OrderHistoryDto> getOrderHistoryDtos() {
-    return orderHistoryDtos;
+  public List<OrderHistoryDto> getOrderHistories() {
+    return orderHistories;
   }
 }

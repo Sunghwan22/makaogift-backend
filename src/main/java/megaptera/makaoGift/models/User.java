@@ -2,6 +2,7 @@ package megaptera.makaoGift.models;
 
 import megaptera.makaoGift.dtos.UserCreatedDto;
 import megaptera.makaoGift.dtos.UserDto;
+import megaptera.makaoGift.exceptions.InsufficientAmountError;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -98,6 +99,10 @@ public class User {
   }
 
   public void pay(Long totalPrice) {
+    if(this.amount < totalPrice) {
+      throw new InsufficientAmountError();
+    }
+
     this.amount -= totalPrice;
   }
 }
